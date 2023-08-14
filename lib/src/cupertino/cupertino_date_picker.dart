@@ -1360,12 +1360,14 @@ class _CupertinoDatePickerDateTimeState
           final Jalali rangeEnd = initialDateTime.addDays(index + 1);
 
           final Jalali now = Jalali.now();
-
-          if (widget.minimumDate?.isAfter(rangeEnd) == true) {
-            return const Text('invalid date');
+          if (widget.minimumDate?.isAfter(rangeEnd) == true ||
+              widget.minimumDate?.compareTo(rangeEnd) == 0) {
+            return const Text('');
           }
-          if (widget.maximumDate?.isAfter(rangeStart) == false) {
-            return const Text('invalid date');
+
+          if (widget.maximumDate?.isAfter(rangeStart) == false &&
+              widget.maximumDate?.compareTo(rangeStart) != 0) {
+            return const Text('');
           }
 
           final String dateText = rangeStart ==
@@ -1995,10 +1997,10 @@ class _CupertinoDatePickerDateState extends State<_CupertinoDatePickerDate> {
           }
         },
         itemBuilder: (BuildContext context, int year) {
-          if (year < widget.minimumYear) return const Text('invalid date');
+          if (year < widget.minimumYear) return const Text('');
 
           if (widget.maximumYear != null && year > widget.maximumYear!) {
-            return const Text('invalid date');
+            return const Text('');
           }
 
           final bool isValidYear = (widget.minimumDate == null ||
