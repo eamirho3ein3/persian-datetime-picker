@@ -1601,7 +1601,16 @@ class _CupertinoDatePickerDateTimeState
       if (fromDate.year != newDate.year ||
           fromDate.month != newDate.month ||
           fromDate.day != newDate.day) {
-        _animateColumnControllerToItem(dateController!, selectedDayFromInitial);
+        if (newDate.isBefore(fromDate)) {
+          _animateColumnControllerToItem(
+              dateController!,
+              dateController!.selectedItem +
+                  ((newDate.toDateTime())
+                      .difference(fromDate.toDateTime())
+                      .inDays));
+        } else {
+          _animateColumnControllerToItem(dateController!, 0);
+        }
       }
 
       if (fromDate.hour != newDate.hour) {
