@@ -1602,12 +1602,19 @@ class _CupertinoDatePickerDateTimeState
           fromDate.month != newDate.month ||
           fromDate.day != newDate.day) {
         if (newDate.isBefore(fromDate)) {
-          _animateColumnControllerToItem(
-              dateController!,
-              dateController!.selectedItem +
-                  ((newDate.toDateTime())
-                      .difference(fromDate.toDateTime())
-                      .inDays));
+          var diffrence =
+              (newDate.toDateTime()).difference(fromDate.toDateTime());
+          if (diffrence.inHours.abs() < 24) {
+            _animateColumnControllerToItem(
+                dateController!, dateController!.selectedItem - 1);
+          } else {
+            _animateColumnControllerToItem(
+                dateController!,
+                dateController!.selectedItem +
+                    ((newDate.toDateTime())
+                        .difference(fromDate.toDateTime())
+                        .inDays));
+          }
         } else {
           _animateColumnControllerToItem(dateController!, 0);
         }
