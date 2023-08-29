@@ -1376,8 +1376,15 @@ class _CupertinoDatePickerDateTimeState
                     now.month,
                     now.day,
                   )
-              ? StringsText.todayLabel
-              : rangeStart.datePickerMediumDate();
+              ? '${StringsText.todayLabel} - ${rangeStart.datePickerMediumDate()}'
+              : (rangeStart ==
+                      Jalali(
+                        now.year,
+                        now.month,
+                        now.day + 1,
+                      )
+                  ? '${StringsText.tomorrowLabel} - ${rangeStart.datePickerMediumDate()}'
+                  : rangeStart.datePickerMediumDate());
 
           return itemPositioningBuilder(
             context,
