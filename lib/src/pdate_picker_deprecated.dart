@@ -241,7 +241,7 @@ class PDayPicker extends StatelessWidget {
     final int firstDayOffset =
         _computeFirstDayOffset(year, month, localizations);
     final List<Widget> labels = <Widget>[
-      ..._getDayHeaders(themeData.textTheme.caption, localizations),
+      ..._getDayHeaders(themeData.textTheme.bodySmall, localizations),
     ];
     for (int i = 0; true; i += 1) {
       // 1-based day of month, e.g. 1-31 for January, and 1-29 for February on
@@ -258,26 +258,27 @@ class PDayPicker extends StatelessWidget {
                 !selectableDayPredicate!(dayToBuild));
 
         BoxDecoration? decoration;
-        TextStyle? itemStyle = themeData.textTheme.bodyText2;
+        TextStyle? itemStyle = themeData.textTheme.bodyMedium;
 
         final bool isSelectedDay = selectedDate.year == year &&
             selectedDate.month == month &&
             selectedDate.day == day;
         if (isSelectedDay) {
           // The selected day gets a circle background highlight, and a contrasting text color.
-          itemStyle = themeData.textTheme.bodyText1?.copyWith( color: themeData.colorScheme.onSecondary);
+          itemStyle = themeData.textTheme.bodyLarge
+              ?.copyWith(color: themeData.colorScheme.onSecondary);
           decoration = BoxDecoration(
             color: themeData.colorScheme.secondary,
             shape: BoxShape.circle,
           );
         } else if (disabled) {
-          itemStyle = themeData.textTheme.bodyText2!
+          itemStyle = themeData.textTheme.bodyMedium!
               .copyWith(color: themeData.disabledColor);
         } else if (currentDate.year == year &&
             currentDate.month == month &&
             currentDate.day == day) {
           // The current day gets a different text color.
-          itemStyle = themeData.textTheme.bodyText1!
+          itemStyle = themeData.textTheme.bodyLarge!
               .copyWith(color: themeData.colorScheme.secondary);
         }
 
@@ -326,7 +327,7 @@ class PDayPicker extends StatelessWidget {
               child: ExcludeSemantics(
                 child: Text(
                   displayedMonth.formatMonthYear(),
-                  style: themeData.textTheme.subtitle1,
+                  style: themeData.textTheme.titleMedium,
                 ),
               ),
             ),
@@ -709,7 +710,7 @@ class _YearPickerState extends State<PYearPicker> {
   Widget build(BuildContext context) {
     assert(debugCheckHasMaterial(context));
     final ThemeData themeData = Theme.of(context);
-    final TextStyle? style = themeData.textTheme.bodyText2;
+    final TextStyle? style = themeData.textTheme.bodyMedium;
     return ListView.builder(
       dragStartBehavior: widget.dragStartBehavior,
       controller: scrollController,
@@ -719,7 +720,7 @@ class _YearPickerState extends State<PYearPicker> {
         final int year = widget.firstDate.year + index;
         final bool isSelected = year == widget.selectedDate.year;
         final TextStyle? itemStyle = isSelected
-            ? themeData.textTheme.headline5!
+            ? themeData.textTheme.headlineSmall!
                 .copyWith(color: themeData.colorScheme.secondary)
             : style;
         return InkWell(
